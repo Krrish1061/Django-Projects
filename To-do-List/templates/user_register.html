@@ -1,0 +1,17 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="d-flex justify-content-center align-content-center">
+  <div>
+    <h1 class="display-4">Register an Account</h1>
+    <div>
+      <p>Already have an Account <a href="{% url 'login_user' %}">Login</a></p>
+    </div>
+    <form action="" method="POST">
+      {% csrf_token %} {% for field in form %}
+      <label>{{field.label}}:</label>
+      {{field}} {% endfor %}
+      <input class="mt-2 btn btn-primary" type="submit" value="submit" />
+    </form>
+  </div>
+</div>
+{% endblock content %}

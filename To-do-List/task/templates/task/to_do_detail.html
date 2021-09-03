@@ -1,0 +1,22 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="container">
+  <div class="card border-0">
+    <div class="card-header">
+      <a class="link-dark" href="{% url 'todo_list' %}">Go back</a>
+      <h2 class="text-center">{{task.title}}</h2>
+    </div>
+    <div class="card-body">
+      <p>{{task.description|linebreaksbr}}</p>
+
+      <div>
+        <a class="btn btn-dark" href="{% url 'todo_update' task.id %}">Edit</a>
+        <a class="btn btn-dark mx-4" href="{% url 'todo_delete' task.id %}"
+          >Delete</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

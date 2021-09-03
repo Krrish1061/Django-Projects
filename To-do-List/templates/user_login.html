@@ -1,0 +1,31 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="container">
+  <div class="d-flex justify-content-center align-content-center">
+    <form method="POST">
+      <h1 class="display-4">Please login</h1>
+      <div>
+        <p>
+          Don't have an Account <a href="{% url 'register_user' %}">Sign up</a>
+        </p>
+      </div>
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="Username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="Username" name="username" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="exampleInputPassword1"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
