@@ -16,12 +16,12 @@
     />
   </head>
   <body>
-    <!-- <a href="{% url 'todo_list' %}">Home Page</a>
-    <a href="{% url 'todo_create' %}">Create Task</a>
-    <a href="{% url 'register_user' %}">Create User</a>
-    <a href="{% url 'login_user' %}">login</a>
-    <a href="{% url 'logout_user' %}">logout</a> -->
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert--{{message.tags}} mb-0">
+      <p class="text-danger text-center">{{message}}</p>
+    </div>
+    {% endfor %} {% endif %}
 
-    <div class="m-5">{% block content %} {% endblock content %}</div>
+    <div class="mt-2 m-2">{% block content %} {% endblock content %}</div>
   </body>
 </html>
