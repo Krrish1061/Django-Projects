@@ -4,3 +4,7 @@ firstpoll/
 simple-social-clone/
 storefront/
 Useraccounts/
+blogging/.env
+blogging/Pipfile
+blogging/Pipfile.lock
+*.pyc
