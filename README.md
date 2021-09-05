@@ -1,4 +1,5 @@
 # Django-Projects
 Django Projects
-### First project - TODO List
+### 1. First project - TODO List
+### 2. Blog - Updating
 Other projects adding soon
