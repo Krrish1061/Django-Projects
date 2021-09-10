@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white mb-3">
+  <div class="container-fluid">
+    <a href="{% url 'index' %}" class="navbar-brand">Blog</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#main-nav"
+      aria-controls="main-nav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- navbar links -->
+    <div class="collapse navbar-collapse" id="main-nav">
+      <ul class="navbar-nav ms-auto text-center">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_post' %}">Create Post</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'draft_post' %}">Drafts</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_account' %}">Profile</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link disabled" href="{% url 'index' %}"
+            >Welcome {{request.user}}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_create' %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

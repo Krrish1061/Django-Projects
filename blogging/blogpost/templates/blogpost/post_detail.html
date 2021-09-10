@@ -1,0 +1,107 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="container">
+  <div>
+    <h1 class="text-center mb-1"><strong>{{post.title}}</strong></h1>
+    <p class="text-center lead">
+      by
+      <a
+        class="link-dark text-decoration-none"
+        href="{% url 'user_profile' post.author.id %}"
+        ><em>{{post.author}}</em></a
+      >
+    </p>
+    {% if post.published_date %}
+    <p class="text-end">
+      <em>
+        posted on: {{post.published_date|time:"h:i:A"}}
+        {{post.published_date|date:"SHORT_DATE_FORMAT"}}
+      </em>
+    </p>
+    {% elif request.user == post.author.user %}
+    <div class="text-end">
+      <a
+        class="btn btn-outline-primary rounded-pill"
+        href="{% url 'publish_post' post.id %}"
+        >Publish</a
+      >
+    </div>
+    {% endif %}
+  </div>
+  <hr />
+  <div>
+    <p>{{post.text|linebreaksbr}}</p>
+    {% if request.user == post.author.user %}
+    <div class="text-end mt-2">
+      <a
+        class="btn btn-outline-primary rounded-pill"
+        href="{% url 'update_post' post.id %}"
+        >Update</a
+      >
+      <a
+        class="btn btn-outline-primary rounded-pill"
+        href="{% url 'delete_post' post.id %}"
+        >Delete</a
+      >
+    </div>
+    {% endif %}
+  </div>
+  <hr />
+
+  <div class="text-center">
+    {% if request.user.is_authenticated%} 
+    {% if request.user != post.author.user%}
+    <h1 class="text-center">Comment on Post</h1>
+    <form action="" method="POST">
+      {% csrf_token %} {% for field in form %}
+      <label class="form-label">{{field.label}}:</label>
+      {{field}} {% endfor %}
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-outline-primary rounded-pill">
+          Comment
+        </button>
+      </div>
+    </form>
+
+    {% elif request.user == post.author.user %}
+    <p>You can't comment on your own projects</p>
+    {% endif %} {% else %}
+    <p>please <a href="{% url 'login' %}">Login</a> to leave a Comment</p>
+    {% endif %}
+  </div>
+
+  <hr />
+  <div class="text-center">
+    <h2 class="text-decoration-underline mb-5">Comments</h2>
+
+    {% for comment in post.comment_set.all %}
+    <div>
+      <div class="mb-2">
+        <p>{{comment.text|linebreaksbr}}</p>
+        <p class="mb-0">posted by: {{comment.author}}</p>
+      </div>
+
+      <div class="mt-0 mb-3">
+        {% if not comment.approved_comment %} 
+        {% if request.user == comment.post.author.user %}
+        <a
+          class="btn btn-outline-primary rounded-pill"
+          href="{% url 'comment_approve' comment.id %}"
+          >Approve Comment</a
+        >
+        <a
+          class="btn btn-outline-primary rounded-pill"
+          href="{% url 'comment_delete' comment.id %}"
+          >Delete Comment</a
+        >
+        {% endif %} {% endif %}
+      </div>
+      <hr />
+    </div>
+
+    {% empty %}
+    <p>No comments</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

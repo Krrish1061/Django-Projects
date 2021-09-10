@@ -1,25 +1,20 @@
 {% extends 'index.html' %} {% block content %}
-<div class="m-4 d-flex flex-column bd-highlight align-items-center">
+
+<div class="container m-4 d-flex flex-column bd-highlight align-items-center">
   <div>
-    <h1>Register Account</h1>
+    <h1>Create a Blog Post</h1>
   </div>
   <div class="w-50">
-    <form action="" method="POST">
+    <form action="" method="post">
       {% csrf_token %} {% for field in form %}
       <label class="form-label">{{field.label}}:</label>
-      {{field}} {% for error in field.errors %}
-      <p class="text-danger">{{error}}</p>
-      {% endfor %} {% endfor %}
+      {{field}} {% endfor %}
       <div class="text-center">
         <button type="submit" class="btn btn-outline-primary mb-3 rounded-pill">
-          Sign Up
+          Create post
         </button>
       </div>
     </form>
-  </div>
-
-  <div>
-    <p>Already have a account <a href="{% url 'login' %}">Login here</a></p>
   </div>
 </div>
 

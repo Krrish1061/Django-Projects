@@ -1,0 +1,124 @@
+{% extends 'index.html' %} {% block content %} 
+<div class="container">
+{% if request.user == profile.user %}
+<div class="text-end me-3 mb-3">
+  <a
+    class="btn btn-outline-primary rounded-pill"
+    href="{% url 'profile_edit' profile.id %}"
+    >Edit profile</a
+  >
+</div>
+{% endif %}
+
+  <div class="row mb-2">
+    <div class="col-md col-lg-4">
+      <div class="card text-center">
+        <div class="mt-3">
+          <img
+            src="{{profile.profile_image.url}}"
+            class="img-fluid img-thumbnail rounded-circle profile-img"
+            alt="profile-image"
+          />
+        </div>
+
+        <div class="card-body text-center">
+          <h1 class="card-title mt-2" title="Name">{{profile.name}}</h1>
+          <h3 title="username">&#64;{{profile.username}}</h3>
+          <p title="Location">From {{profile.location}}</p>
+
+          <ul
+            class="
+              list-group list-group-flush
+              d-flex
+              flex-row
+              justify-content-center
+            "
+          >
+            <li class="list-group-item">
+              <a title="Github" href="{{profile.social_github}}" target="_blank"
+                ><i class="bi bi-github"></i
+              ></a>
+            </li>
+            <li class="list-group-item">
+              <a title="Youtube" href="{{profile.social_youtube}}" target="_blank"
+                ><i class="bi bi-youtube"></i
+              ></a>
+            </li>
+            <li class="list-group-item">
+              <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"
+                ><i class="bi bi-twitter"></i
+              ></a>
+            </li>
+            <li class="list-group-item">
+              <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"
+                ><i class="bi bi-linkedin"></i
+              ></a>
+            </li>
+            <li class="list-group-item">
+              <a title="Personal Website" href="{{profile.social_website}}" target="_blank"
+                ><i class="bi bi-globe"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md col-lg-8">
+      <div>
+        <h2>Short-intro</h2>
+        <p>{{profile.short_intro|linebreaksbr}}</p>
+      </div>
+      <div>
+        <h2>About Me</h2>
+        <p>{{profile.bio|linebreaksbr}}</p>
+      </div>
+    </div>
+  </div>
+
+  <table class="table text-center">
+    <tbody class="text-center">
+      <tr>
+        <td><h1 class="mt-0">Projects</h1></td>
+        <td>
+          {% if request.user == profile.user%}
+          <a href="{% url 'create_post' %}" class="btn btn-outline-primary rounded-pill">
+            <span><i class="bi bi-plus"></i></span> Add Projects
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+
+      {% for blog in profile.post.all %}
+      <tr>
+        <td>
+          <div>
+            <h4>
+              <a class="link-dark" href="{% url 'detail_post' blog.id %}">
+                {{blog.title}}</a
+              >
+            </h2>
+          </div>
+          {{blog.text|slice:"100"}}
+        </td>
+        <td>
+          {% if request.user == profile.user%}
+          <a href="{% url 'update_post' blog.id %}" class="btn btn-sm btn-outline-primary rounded-pill mb-2">
+            <span><i class="bi bi-pencil-fill"></i></span> Edit
+          </a>
+          <a href="{% url 'delete_post' blog.id %}" class="btn btn-sm btn-outline-primary rounded-pill mb-2">
+            <span><i class="bi bi-x-circle"></i></span> Delete
+          </a>
+          {% else %}
+          <a href="{% url 'comment_post' blog.id %}" class="btn btn-sm btn-outline-primary rounded-pill">
+            Comment
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

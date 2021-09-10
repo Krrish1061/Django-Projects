@@ -8,3 +8,5 @@ blogging/.env
 blogging/Pipfile
 blogging/Pipfile.lock
 *.pyc
+*.cpython
+blogging/.vscode/

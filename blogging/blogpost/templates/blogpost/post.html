@@ -1,0 +1,29 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    {% for item in post %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card card-blog rounded m-2">
+        <div class="card-header text-center">
+          <h5 class="card-title">
+            <a class="link-dark" href="{% url 'detail_post' item.id %}">
+              {{item.title}}</a
+            >
+            <h6>
+              <a href="{% url 'user_profile' item.author.id %}"
+                >By {{item.author.username}}</a
+              >
+            </h6>
+          </h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text h-25">{{item.text|slice:"100"}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endblock content %}
+</div>
