@@ -69,7 +69,7 @@ def user_login(request):
             if user:
                 login(request, user)
                 messages.success(request, 'logged in Successfully')
-                return redirect('index')
+                return redirect(request.GET['next'] if 'next' in request.GET else 'index')
             else:
                 messages.error(request, "username or password didn't match")
     return render(request, 'userprofile/login.html')

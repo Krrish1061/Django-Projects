@@ -27,7 +27,7 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['published_date', 'created_date']
+        ordering = ['-published_date', 'created_date']
 
 
 class Comment(models.Model):

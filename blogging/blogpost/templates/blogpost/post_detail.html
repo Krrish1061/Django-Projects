@@ -49,24 +49,29 @@
   <hr />
 
   <div class="text-center">
-    {% if request.user.is_authenticated%} 
-    {% if request.user != post.author.user%}
-    <h1 class="text-center">Comment on Post</h1>
-    <form action="" method="POST">
-      {% csrf_token %} {% for field in form %}
-      <label class="form-label">{{field.label}}:</label>
-      {{field}} {% endfor %}
-      <div class="text-center mt-3">
-        <button type="submit" class="btn btn-outline-primary rounded-pill">
-          Comment
-        </button>
-      </div>
-    </form>
-
-    {% elif request.user == post.author.user %}
-    <p>You can't comment on your own projects</p>
-    {% endif %} {% else %}
-    <p>please <a href="{% url 'login' %}">Login</a> to leave a Comment</p>
+    {% if request.user.is_authenticated %} 
+      {% if request.user != post.author.user %}
+        <h1 class="text-center">Comment on Post</h1>
+        <form action="" method="POST">
+          {% csrf_token %} 
+          {% for field in form %}
+            <label class="form-label">{{field.label}}:</label>
+            {{field}} 
+          {% endfor %}
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-outline-primary rounded-pill">
+              Comment
+            </button>
+          </div>
+        </form>
+      {% elif request.user == post.author.user %}
+        <p>You can't comment on your own projects</p>
+      {% endif %} 
+    {% else %}
+    <p>
+      please <a href="{% url 'login' %}?next={{request.path}}">Login</a> to
+      leave a Comment
+    </p>
     {% endif %}
   </div>
 

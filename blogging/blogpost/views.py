@@ -3,13 +3,18 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Comment, Post
 from .forms import PostForm, CommentForm
+from .utilis import searchpost, paginatepost
 
 # Create your views here.
 
 
 def index(request):
-    post = Post.objects.filter(published_date__isnull=False)
-    context = {'post': post}
+    post, search_query = searchpost(request)
+    # I am using single html file for index and draft views so it seems ugly
+    post = post.filter(published_date__isnull=False)
+    custom_range, post = paginatepost(request, post, 6)
+    context = {'post': post, 'search_query': search_query,
+               'custom_range': custom_range}
     return render(request, 'blogpost/post.html', context)
 
 
@@ -17,9 +22,13 @@ def index(request):
 def draft_post(request):
     if request.user.is_authenticated:
         user = request.user
-        post = Post.objects.filter(author__user=user).filter(
+        post, search_query = searchpost(request)
+        # I am using single html file for index and draft views so it seems ugly
+        post = post.filter(author__user=user).filter(
             published_date__isnull=True)
-        context = {'post': post}
+        custom_range, post = paginatepost(request, post, 6)
+        context = {'post': post, 'search_query': search_query,
+                   'custom_range': custom_range}
         return render(request, 'blogpost/post.html', context)
 
 

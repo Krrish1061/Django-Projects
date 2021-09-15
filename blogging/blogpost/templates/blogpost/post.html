@@ -1,7 +1,23 @@
 {% extends 'index.html' %} {% block content %}
 
 <div class="container">
-  <div class="row">
+  <div class="m-3">
+    <form id="searchForm" class="d-flex justify-content-center" method="GET">
+      <input
+        class="form-control w-25 me-2"
+        type="text"
+        placeholder="type text to search"
+        name="search_query"
+        value="{{search_query}}"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success rounded-pill" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+
+  <div class="row mb-2">
     {% for item in post %}
     <div class="col-md-6 col-lg-4">
       <div class="card card-blog rounded m-2">
@@ -25,5 +41,43 @@
     {% endfor %}
   </div>
 
-  {% endblock content %}
+  {% if post.has_other_pages %}
+  <div>
+    <ul class="pagination justify-content-center">
+      {% if post.has_previous %}
+      <li class="page-item m-2">
+        <a
+          href="?page={{post.previous_page_number}}"
+          class="btn page-link"
+          data-page="{{post.previous_page_number}}"
+        >
+          &#10094; Prev</a
+        >
+      </li>
+      {% endif %} {% for page in custom_range %} {% if page == post.number %}
+      <li class="page-item active m-2">
+        <a href="?page={{page}}" class="btn page-link" data-page="{{page}}"
+          >{{page}}</a
+        >
+      </li>
+      {% else %}
+      <li class="page-item m-2">
+        <a href="?page={{page}}" class="btn page-link" data-page="{{page}}"
+          >{{page}}</a
+        >
+      </li>
+      {% endif %} {% endfor %} {% if post.has_next %}
+      <li class="page-item m-2">
+        <a
+          href="?page={{post.next_page_number}}"
+          class="btn page-link"
+          data-page="{{post.next_page_number}}"
+          >Next &#10095;</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endif %}
 </div>
+{% endblock content %}
