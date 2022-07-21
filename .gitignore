@@ -10,3 +10,4 @@ blogging/Pipfile.lock
 *.pyc
 *.cpython
 blogging/.vscode/
+*.vscode/
