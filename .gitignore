@@ -11,3 +11,6 @@ blogging/Pipfile.lock
 *.cpython
 blogging/.vscode/
 *.vscode/
+video-hosting-app/
+video-hosting-application/
+
